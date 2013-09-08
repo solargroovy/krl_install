@@ -152,4 +152,28 @@ else
   echo "Found $module"
 fi
 
+# Geo::IP
+popd
+
+module="Geo::IP"
+
+perldoc -l $module &> /dev/null
+
+status=$?
+
+if [ $status == 1 ]
+then
+  file="Geo-IP-1.42"
+  echo "Install $file from source"
+  sudo ln -s /web/share/GeoIP /usr/local/share/GeoIP
+  wget "http://search.cpan.org/CPAN/authors/id/B/BO/BORISZ/$file.tar.gz"
+  tar -zxvf "$file.tar.gz"
+  cd $file
+  perl ./Makefile.[pP][lL] LIBS=-L/web/lib INC=-I/web/include PP=1
+  make
+  sudo make install
+else
+  echo "Found $module"
+fi
+
 

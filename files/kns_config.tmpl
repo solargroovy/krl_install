@@ -1,0 +1,35 @@
+# kns_config.yml
+
+# This is the configuration file for KNS.
+#  - format id YAML
+#  - there are no optional parameters.
+
+#
+# configure memcache
+#
+memcache:
+
+  # IP addresses all the hosts that are running memcached
+  mcd_hosts: <TMPL_LOOP NAME=MCD_HOSTS>
+    - <TMPL_VAR NAME=MCD_IP></TMPL_LOOP>
+  mcd_port: <TMPL_VAR NAME=MCD_PORT>
+
+sessions:
+   # IP addresses all the hosts that are running memcachedb (sessions)
+  session_hosts: <TMPL_LOOP NAME=MCD_HOSTS>
+    - <TMPL_VAR NAME=MCD_IP></TMPL_LOOP>
+  mcd_port: <TMPL_VAR NAME=MCD_PORT>
+
+# MongoDB Server config
+MONGO_HOST: <TMPL_VAR NAME=MONGO_HOST>
+MONGO_PORT: <TMPL_VAR NAME=MONGO_PORT>
+MONGO_DB: <TMPL_VAR NAME=MONGO_DB>
+MONGO_MAX_SIZE: <TMPL_VAR NAME=MONGO_MAX>
+
+# home directory
+WEB_ROOT: <TMPL_VAR NAME=WEB_ROOT>
+
+# KOBJ install location
+KOBJ_ROOT: <TMPL_VAR NAME=KOBJ_ROOT>
+
+

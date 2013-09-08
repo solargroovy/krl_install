@@ -10,6 +10,7 @@ BSD::Resource
 Bundle::Apache2
 Bundle::CPAN
 Cache::Memcached
+Carp::Assert::More
 CGI
 Clone
 Compress::Zlib
@@ -33,11 +34,13 @@ Email::MIME
 Email::Simple
 ExtUtils::XSBuilder
 File::Find::Rule
+Geo::StreetAddress::US
 Getopt::Std
 HTML::ParseBrowser
 HTML::Query
 HTML::Template
 Inline
+IPC::Lock::Memcached
 JavaScript::Minifier
 JSON::XS
 Log::Dispatch::File
@@ -48,6 +51,7 @@ LWP::Simple
 Math::Combinatorics
 Math::Round
 MIME::QuotedPrint::Perl
+MIME::Base64
 Mobile::UserAgent
 ModPerl::Registry
 ModPerl::Util
@@ -69,6 +73,7 @@ Test::More
 Text::CSV
 URI
 URI::Escape
+WWW::Mechanize
 XDI
 XML::XML2JSON
 XML::XPath
