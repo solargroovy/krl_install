@@ -1,0 +1,28 @@
+log4perl.logger = DEBUG, FileApp
+log4perl.category                   = DEBUG, Buffer
+
+log4perl.appender.FileApp               = Log::Log4perl::Appender::File
+log4perl.appender.FileApp.filename  = <TMPL_VAR NAME=LOG_DIR>/detail_log
+log4perl.appender.FileApp.mode          = append
+log4perl.appender.FileApp.owner         = web
+log4perl.appender.FileApp.group         = web
+log4perl.appender.FileApp.utf8          = 1
+log4perl.appender.FileApp.layout        = Log::Log4perl::Layout::PatternLayout
+log4perl.appender.FileApp.layout.ConversionPattern = \
+        %r %X{eid} %p %F{1} %X{site} %X{rule} %m%n
+
+# Regular Screen Appender
+log4perl.appender.Screen           = Log::Log4perl::Appender::Screen
+log4perl.appender.Screen.stdout    = 0
+log4perl.appender.Screen.stderr    = 0
+log4perl.appender.Screen.layout    = Log::Log4perl::Layout::PatternLayout::Multiline
+log4perl.appender.Screen.layout.ConversionPattern = \
+    // %d %p %F{1} %X{site} %X{rule} %m%n
+
+# Screen's Buffer
+log4perl.appender.Buffer               = Log::Log4perl::Appender::Buffer
+log4perl.appender.Buffer.appender      = Screen
+log4perl.appender.Buffer.trigger = sub {   \
+    my($self, $params) = @_;               \
+    return $params->{'message'} =~ /__SCREEN__/; }
+

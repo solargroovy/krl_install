@@ -22,10 +22,14 @@ cd newdata
 
 wget "http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/$geocountry.gz"
 gunzip "$geocountry.gz"
-sudo cp $geocountry /usr/local/share
 
 wget "http://geolite.maxmind.com/download/geoip/database/$geocity.gz"
 gunzip "$geocity.gz"
-sudo cp $geocity /usr/local/share/GeoIPCity.dat
 
-
+target="/web/share/GeoIP"
+if [[ ! -d "$target" ]]
+then
+  mkdir -p $target
+fi
+sudo cp $geocountry $target
+sudo cp $geocity "$target/GeoIPCity.dat"

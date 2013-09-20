@@ -32,21 +32,39 @@ echo "Local $local"
 if [[ $local -eq "y" ]] 
 then
   #yum info mongo-10gen
-  sudo yum –y install mongo-10gen 
-  sudo yum -y install mongo-10gen-server
+  which mongo
+  status=$?
+  echo "Install: $status"
+  if [[ "$status" -ne "0" ]]
+  then
+    sudo yum –y install mongo-10gen 
+    sudo yum -y install mongo-10gen-server
+  else
+    echo "mongo executable alread installed"
+  fi
 
   echo "Edit config for locally hosted mongo"
   file="/etc/mongod.conf"
-  sudo perl -pi -e 's/^#\s*nojournal/nojournal/' $file
+  #sudo perl -pi -e 's/^#\s*nojournal/nojournal/' $file
   sudo perl -pi -e 's/^#\s*noprealloc/noprealloc/' $file
   grep nojour $file
   grep noprealloc $file
   sudo /sbin/service mongod status &> /dev/null
-
   status=$?
+  pidfile=`grep pidfilepath $file`
+  dirIndex=`expr index "$pidfile" "/"`
+  dirIndex=`expr $dirIndex - 1`
+  echo ${pidfile:$dirIndex}
+  pidfile=${pidfile%"/mongod.pid"}
+  echo "Pidfile: $pidfile Status: $status Index:$dirIndex"
 
   if [[ $status > 0 ]]
   then
+    if [[ ! -d $pidfile ]]
+    then
+      sudo mkdir -p $pidfile
+      sudo chown mongod:mongod $pidfile
+    fi
     sudo /sbin/service mongod start
   fi
 fi

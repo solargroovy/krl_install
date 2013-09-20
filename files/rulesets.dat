@@ -1,0 +1,6 @@
+cs_test.prod,cs_test.krl,Basic KRE unit tests
+cs_test_authz.prod,cs_test_authz.krl,Basic KRE unit tests
+a144x171.prod,a144x171.krl,Support for a key Module
+a144x172.prod,a144x172.krl,Support for a key Module
+a144x88.prod,a144x88.krl,Composable action module
+a144x84.prod,a144x84.krl,Composable action module

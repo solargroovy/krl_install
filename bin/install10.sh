@@ -42,10 +42,4 @@ fi
 /usr/bin/perl -MInline::Java::Server=start >& /dev/null;
 status=$?
 
-if [[ $status == 0 ]]
-then
-  echo "Parser started"
-else
-  echo "Parser not started"
-fi
-echo "Parser start: $status"
+

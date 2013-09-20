@@ -32,4 +32,91 @@ WEB_ROOT: <TMPL_VAR NAME=WEB_ROOT>
 # KOBJ install location
 KOBJ_ROOT: <TMPL_VAR NAME=KOBJ_ROOT>
 
+SERVER_ADMIN: <TMPL_VAR NAME=SERVER_ADMIN>
 
+RUN_MODE: <TMPL_VAR NAME=RUN_MODE>
+
+<TMPL_VAR NAME=RUN_MODE>:
+  INIT_HOST: <TMPL_VAR NAME=RUN_MODE>
+  CB_HOST: <TMPL_VAR NAME=CB_HOST>
+  EVAL_HOST: <TMPL_VAR NAME=EVAL_HOST>
+  KRL_HOST: <TMPL_VAR NAME=KRL_HOST>
+  COOKIE_DOMAIN:  <TMPL_VAR NAME=COOKIE_DOMAIN>
+  
+# Rule repository configuration
+RULE_REPOSITORY_TYPE: file
+RULE_REPOSITORY: <TMPL_VAR NAME=RULE_REPOSITORY>
+
+
+# rotation period for logs (cronolog based)
+# pattern: #period (e.g. 1hour, 5min)
+LOG_PERIOD: 1hour
+
+MAX_SERVERS: <TMPL_VAR NAME=MAX_SERVERS>
+
+# Usage limits to terminate long running processes
+# These are required fields since they are used to build apache conf
+# cpu time (s)
+CPU_LIMIT: <TMPL_VAR NAME=CPU_LIMIT>
+
+# maximum requests per child (set low)
+MAX_REQUESTS_PER_CHILD: <TMPL_VAR NAME=MAX_REQUESTS_PER_CHILD>
+
+KNS_LANDING_PAGE: <TMPL_VAR NAME=KNS_LANDING_PAGE>
+
+KNS_ERROR_MSG: KNS has experienced an error in processing the request.  We have logged this error and will respond to it.  For more information please contact <TMPL_VAR NAME=SERVER_ADMIN>
+
+
+# serve runtime from cloudfront
+USE_CLOUDFRONT: 0
+RUNTIME_LIB_NAME: http://static.kobj.net/kobj-static-20101021215108.js
+
+# default time to cache datasets for when no time period is specified
+CACHEABLE_THRESHOLD: <TMPL_VAR NAME=CACHEABLE_THRESHOLD> 
+
+# machine to rsync log files to.
+# logs are placed in directory named "logs" in the account named by LOG_ACCOUNT
+LOG_SINK: <TMPL_VAR NAME=LOG_SINK>
+
+# account on LOG_SINK to rsync to
+# an account with this name should exist on LOG_SINK
+# a public SSH cert for LOG_ACCOUNT should be on all KNS machines
+LOG_ACCOUNT: <TMPL_VAR NAME=LOG_ACCOUNT>
+
+DATA_ROOT: <TMPL_VAR NAME=DATA_ROOT>
+
+# Constant declarations taken from KOBJ.pm
+DEFAULT_SERVER_ROOT:  kobj.net
+DEFAULT_ACTION_PREFIX: kobj-cs
+DEFAULT_LOG_PREFIX: kobj-log
+DEFAULT_ACTION_HOST: cs.kobj.net
+DEFAULT_LOG_HOST: log.kobj.net
+DEFAULT_JS_ROOT: /web/lib/perl/etc/js
+
+#javascript version
+JS_VERSION: 1.0
+JQUERY_VERSION: 1.7
+
+PERL_WARNINGS: <TMPL_VAR NAME=PERL_WARNINGS>
+
+permissions:
+  developer :
+    cloud :
+      create : 0
+      destroy : 0
+      auth : 1
+    ruleset :
+      create : 0
+      destroy : 0
+      show : 1
+    eci :
+      create : 1
+      destroy : 1
+      show : 1
+
+# Allow non-installed rulesets
+# WARNING: enabling this is a security problem. Be sure you understand the
+# consequences
+ALLOW_ALL_RULESETS: <TMPL_VAR NAME=ALLOW_ALL_RULESETS>
+
+#EOF
