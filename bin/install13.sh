@@ -32,7 +32,7 @@ fi
 
 # update config file
 file="/web/etc/kns_config.yml"
-fqp="$default_dir/$repod/rulesets"
+fqp="$default_dir/$repod/rulesets/"
 
 if [[ -d $fqp ]]
 then
