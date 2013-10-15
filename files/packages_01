@@ -34,6 +34,7 @@ Email::MIME
 Email::Simple
 ExtUtils::XSBuilder
 File::Find::Rule
+File::Slurp
 Geo::StreetAddress::US
 Getopt::Std
 HTML::ParseBrowser
