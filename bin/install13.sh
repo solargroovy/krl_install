@@ -1,6 +1,6 @@
 #!/bin/bash
 
-repo="git://github.com:kre/common.git"
+repo="git://github.com/kre/common.git"
 repod='common'
 
 default_dir="/web/src"
