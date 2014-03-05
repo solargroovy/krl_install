@@ -12,6 +12,9 @@ use Carp;
 use HTML::Template;
 use ConfMaker qw( :all );
 
+
+use Kynetx::Configure;
+
 my $config_file = "../files/kns_config.tmpl";
 my $param_file = "../files/config.conf";
 my $master = "/web/etc/kns_config.yml";
@@ -38,3 +41,21 @@ foreach my $p (@params) {
 
 rotate_file($master,$template->output());
 
+# Build the Javascript RTE and Apache conf
+
+# load the config variables from the file you just made
+#
+
+Kynetx::Configure::configure();
+
+my $bin_dir = Kynetx::Configure::get_config("KOBJ_ROOT");
+my $cmd = $bin_dir . '/bin/install-init-files.pl';
+my $result = `$cmd`;
+
+print $result, "\n";
+
+$cmd = $bin_dir . '/bin/install-httpd-conf.pl -aljkf';
+
+$result = `$cmd`;
+
+print $result, "\n";

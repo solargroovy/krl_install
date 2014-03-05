@@ -31,6 +31,7 @@ use lib qw (
 
 use File::Slurp;
 use File::Copy;
+use File::Basename;
 use IO::File;
 use Data::Dumper;
 
@@ -52,10 +53,12 @@ our %EXPORT_TAGS = (all => [
     restart_apache
     rotate_file
     collections_from_config
+    DEFAULT_OWNER_USERNAME
   )]);
 our @EXPORT_OK   =(@{ $EXPORT_TAGS{'all'} }) ;
 
 use constant SEP => ",";
+use constant DEFAULT_OWNER_USERNAME => "_web_";
 
 sub restart_apache {
   my $command = "sudo /sbin/service httpd restart";
@@ -177,15 +180,27 @@ sub rotate_file {
   }
   my $suffix = time();
   my $oldfile = $root . "." . $suffix;
+  my $backdir = File::Basename::dirname($filename);
+  print "Backup: $backdir\n";
+  print "Root: $root\n";
+  my @stale = glob "$root.[0123456789]*";
+  foreach my $file (@stale) {
+    print "\tFile: $file\n";
+    move($file,"$backdir/bak/");
+  }
+  
+  
+  
+
   if (-e $filename && -w _) {
     print "Copy $filename to $oldfile\n";
-    move($filename,$oldfile);
+    move($filename,$oldfile) or die "Move failed: $!";
   }
   my $fh = IO::File->new();
   $fh->open("> $filename");
   print $fh $new_data;
   $fh->close();
-        
+  return $oldfile;    
 
 }
 

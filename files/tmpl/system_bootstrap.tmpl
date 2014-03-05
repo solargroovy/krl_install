@@ -1,0 +1,101 @@
+ruleset <TMPL_VAR NAME="RID"> {
+        meta {
+                name "System Bootstrap"
+                description <<
+                  This ruleset will be installed when the KRE
+                  instance is first configured and will give
+                  a handle for installing other rules and various
+                  administrative tasks 
+                >>
+                author "Mark Horstmeier"
+                logging on
+                use module <TMPL_VAR NAME="CREDENTIALS_MODULE">
+        }
+
+        dispatch {
+                // domain "exampley.com"
+        }
+
+        global {
+
+        }
+
+        rule its_alive {
+                select when pageview ".*" setting ()
+                pre {
+                    blob = << active >>;
+                }
+                replace_inner("#bootstatus",blob);
+        }
+
+        rule flush_rule {
+            select when pageview ".*" setting ()
+            pre {
+                flush_form = <<
+                    <span id="fSpan">
+                        <div id="myDIV"> 
+                          <form id="flushForm" onsubmit="return false"> 
+                              <input name="owner" placeholder="Developer ECI"><br/> 
+                              <input name="RID" placeholder="RID"><br/>
+                              <input name="pin" placeholder="(pin)"><br/> 
+                                <input type="submit" value="Submit"> 
+                            </form> 
+                        </div> 
+                        <div id="flushStatus"> </div> 
+                    </span>
+                >>;
+
+            }
+            {
+                watch("#flushForm","submit");
+                append("#content",flush_form);
+            }
+
+        }
+
+        rule flush_action {
+            select when web submit "#flushForm"
+            {
+                notify("Flush Form", "submit")
+                    with 
+                        position = "bottom-left" and
+                        width = "250%";
+            }
+        }
+        rule register_rule {
+            select when pageview ".*" setting ()
+            pre {
+                register_form = <<
+                    <span id="rSpan">
+                        <div id="rDIV"> 
+                            <form id="registerForm" onsubmit="return false">  
+                              <input name="RID" placeholder="RID"><br/>
+                              <input name="uri" placeholder="http://..."><br/> 
+                              <input name="owner" placeholder="Developer ECI"><br/>
+                              <input type="submit" value="Submit"> 
+                            </form> 
+                        </div> 
+                        <div id="regStatus"> </div> 
+                    </span>
+                >>;
+                
+                }
+                notify("KRE Bootstrap", "Bootstrap ruleset installed");
+                watch("#registerForm","submit");
+                append("#content",register_form);
+            }
+
+        }
+
+        rule register_action {
+            select when web submit "#registerForm"
+            {
+                notify("Register Form", "submit")
+                    with 
+                        position = "bottom-left" and
+                        width = "250%";
+        }
+        }
+
+}
+

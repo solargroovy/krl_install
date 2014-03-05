@@ -1,0 +1,23 @@
+# Yaml config file for cloud os
+common : 
+    RID_TWILIO : a169x699
+    RID_SENDGRID : a16x129
+    RID_PDS : a169x676
+    RID_CLOUDOS : a169x625
+    RID_SETTINGS : a169x695
+    RID_CLOUDRAIN : a169x701 
+    RID_APPSTORE : a169x668 
+    RID_SCHEMA : a169x691 
+
+rulesets: 
+    a16x161 :
+        rid : a16x161
+        filename : CloudOS/NotificationService/a16x161.krl
+        vars : 
+            TWILIO_NUMBER : Phone number of Twilio account|801-200-3415
+            TIMEZONE : Timezone for datetime operations|America/Denver
+    a169x695 : 
+        rid : a169x695
+        filename : CloudOS/Settings/a169x695.krl
+        vars : 
+
